@@ -5,11 +5,11 @@ import { Component
        , EventEmitter } from '@angular/core';
 import { FormGroup }    from '@angular/forms';
 
-import { FormControlService } from './form-control.service';
-import { FormControlBase }    from './form-controls/form-control-base';
+import { FormControlService } from './form-controls';
+import { FormControlBase }    from './form-controls';
 
 @Component({
-    selector: 'dynamic-form',
+    selector: 'schemeform',
     template: `
     <div>
       <form (ngSubmit)="onSubmit()" [formGroup]="form">
@@ -23,11 +23,10 @@ import { FormControlBase }    from './form-controls/form-control-base';
             <button md-raised-button type="button" (click)="onClose()">Close</button>
         </div>
       </form>
-    </div>
-    `,
+    </div>`,
     providers: [ FormControlService ]
 })
-export class DynamicFormComponent implements OnChanges {
+export class SchemeFormComponent implements OnChanges {
     form: FormGroup;
     @Input()  controls: FormControlBase<any>[] = [];
     @Output() submit:   EventEmitter<any>      = new EventEmitter();
@@ -36,14 +35,14 @@ export class DynamicFormComponent implements OnChanges {
     constructor(private fcs: FormControlService) { }
 
     ngOnChanges() {
-        this.form = this.fcs.toFormGroup(this.formControls);
+        this.form = this.fcs.toFormGroup(this.controls);
     }
 
     onClose() {
-        this.dynamicFormClose.emit();
+        this.close.emit();
     }
 
     onSubmit() {
-        this.dynamicFormSubmit.emit(this.form.value);
+        this.submit.emit(this.form.value);
     }
 }

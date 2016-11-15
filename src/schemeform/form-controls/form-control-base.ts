@@ -1,4 +1,4 @@
-import { FormControlOptions } from './form-control-options.ts';
+import { FormControlOptions } from './form-control-options';
 
 export class FormControlBase<T> {
   value: T;
